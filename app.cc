@@ -13,16 +13,22 @@ class Vector {
     int* p;
 };
 
-enum Color{
+enum class Fruit {
+    apple,
+    banana
+};
+
+enum Color {
     red,
     blue,
     green
 };
 
 int main() {
-    variant<int, float> v;
-    v = (float)1.2;
-    cout << get<float>(v) << endl;
-    cout<<holds_alternative<int>(v)<<endl;
-    cout<<holds_alternative<float>(v)<<endl;
+    cout << red << endl;
+    // cout<<Fruit::apple<<endl; // error
+    cout << (red == 0) << endl;
+    // cout<< Fruit::apple==0; // error
+    red;
+    // apple; // error
 }
