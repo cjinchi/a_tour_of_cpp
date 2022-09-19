@@ -6,11 +6,14 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include<memory>
 using namespace std;
 
 class Base {
    public:
-    virtual int size() const = 0;
+    int size() const {
+        return 0;
+    }
 };
 
 class Sub : public Base {
@@ -38,8 +41,9 @@ void g(Base &b) {
 }
 
 int main() {
-    Child *sub = new Child();
-    Base *p = sub;
+    Sub a;
+    Base b;
+    b = a;
     Sub *test = dynamic_cast<Sub *>(p);
     if (test == nullptr) {
         cout << "is nullptr" << endl;
