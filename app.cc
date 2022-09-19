@@ -1,54 +1,56 @@
 #include "app.h"
 
+#include <cstring>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <variant>
 #include <vector>
-#include<memory>
+
 using namespace std;
 
-class Base {
+class MyClass {
+   private:
+    int num = 0;
+
    public:
-    int size() const {
-        return 0;
+    MyClass(int num) : num{num} {}
+
+    MyClass(const MyClass& c) : num{c.num} {
+        cout << "class copy constructor" << endl;
+    }
+
+    MyClass(MyClass&& a) : num{a.num} {
+        cout << "class move constructor" << endl;
+    }
+
+    MyClass& operator=(const MyClass& a) {
+        this->num = a.num;
+        cout << "class copy assignment" << endl;
+        return *this;
+    }
+
+    MyClass& operator=(MyClass&& a) {
+        num = a.num;
+        a.num = 0;
+        cout << "class move assignment" << endl;
+        return *this;
+    }
+
+    void print() {
+        cout << num << endl;
     }
 };
 
-class Sub : public Base {
-   public:
-    int size() const override {
-        return 3;
-    }
-};
-
-class Child : public Base {
-   public:
-    int size() const override {
-        return 4;
-    }
-};
-
-void f(initializer_list<int> nums) {
-    for (auto itr = nums.begin(); itr != nums.end(); itr++) {
-        cout << *itr << endl;
-    }
-}
-
-void g(Base &b) {
-    cout << b.size() << endl;
+MyClass get_my_class() {
+    MyClass ret{1};
+    return ret;
 }
 
 int main() {
-    Sub a;
-    Base b;
-    b = a;
-    Sub *test = dynamic_cast<Sub *>(p);
-    if (test == nullptr) {
-        cout << "is nullptr" << endl;
-    } else {
-        cout << "no" << endl;
-    }
+    MyClass a = get_my_class();
+    a.print();
     return 0;
 }
