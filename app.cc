@@ -11,13 +11,29 @@
 
 using namespace std;
 
+class NestedClass {
+   public:
+    NestedClass(const NestedClass& c) {
+        cout << "nested copy constructor" << endl;
+    }
+
+    NestedClass& operator=(const NestedClass& c) {
+        cout << "nested copy assign" << endl;
+    }
+
+    NestedClass(NestedClass&& c) {
+        cout << "nexted move constructor" << endl;
+    }
+
+    NestedClass& operator=(NestedClass&& c) {
+        cout << "nested move assign" << endl;
+    }
+};
 class MyClass {
    private:
-    int num = 0;
+    NestedClass num;
 
    public:
-    MyClass(int num) : num{num} {}
-
     MyClass(const MyClass& c) : num{c.num} {
         cout << "class copy constructor" << endl;
     }
@@ -34,30 +50,30 @@ class MyClass {
 
     MyClass& operator=(MyClass&& a) {
         num = a.num;
-        a.num = 0;
+        // a.num = 0;
         cout << "class move assignment" << endl;
         return *this;
     }
 
-    MyClass operator+(const MyClass& a){
-        cout<<"operator +"<<endl;
-        MyClass ret(num+a.num);
-        return ret;
-    }
+    // MyClass operator+(const MyClass& a) {
+    //     cout << "operator +" << endl;
+    //     MyClass ret(num + a.num);
+    //     return ret;
+    // }
 
-    void print() {
-        cout << num << endl;
-    }
+    // void print() {
+    //     cout << num << endl;
+    // }
 };
 
 MyClass get_my_class() {
-    MyClass ret{1};
+    MyClass ret;
     return ret;
 }
 
 // should be ran with -fno-elide-constructors flag
 int main() {
     MyClass a = get_my_class();
-    a.print();
+    // a.print();
     return 0;
 }
