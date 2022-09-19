@@ -1,34 +1,50 @@
+#include "app.h"
+
 #include <iostream>
+#include <map>
+#include <stdexcept>
 #include <string>
 #include <variant>
+#include <vector>
 using namespace std;
 
-class Vector {
+class Base {
    public:
-    Vector(int s) : s{s}, p{new int[s]} {}
-    int& operator[](int i) { return p[i]; }
-
-   private:
-    int s;
-    int* p;
+    virtual int size() const = 0;
 };
 
-enum class Fruit {
-    apple,
-    banana
+class Sub : public Base {
+   public:
+    int size() const override {
+        return 3;
+    }
 };
 
-enum Color {
-    red,
-    blue,
-    green
+class Child : public Base {
+   public:
+    int size() const override {
+        return 4;
+    }
 };
+
+void f(initializer_list<int> nums) {
+    for (auto itr = nums.begin(); itr != nums.end(); itr++) {
+        cout << *itr << endl;
+    }
+}
+
+void g(Base &b) {
+    cout << b.size() << endl;
+}
 
 int main() {
-    cout << red << endl;
-    // cout<<Fruit::apple<<endl; // error
-    cout << (red == 0) << endl;
-    // cout<< Fruit::apple==0; // error
-    red;
-    // apple; // error
+    Child *sub = new Child();
+    Base *p = sub;
+    Sub *test = dynamic_cast<Sub *>(p);
+    if (test == nullptr) {
+        cout << "is nullptr" << endl;
+    } else {
+        cout << "no" << endl;
+    }
+    return 0;
 }
