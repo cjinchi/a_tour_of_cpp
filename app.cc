@@ -39,6 +39,12 @@ class MyClass {
         return *this;
     }
 
+    MyClass operator+(const MyClass& a){
+        cout<<"operator +"<<endl;
+        MyClass ret(num+a.num);
+        return ret;
+    }
+
     void print() {
         cout << num << endl;
     }
@@ -49,6 +55,7 @@ MyClass get_my_class() {
     return ret;
 }
 
+// should be ran with -fno-elide-constructors flag
 int main() {
     MyClass a = get_my_class();
     a.print();
