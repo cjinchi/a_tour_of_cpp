@@ -12,18 +12,23 @@
 
 using namespace std;
 
-template <typename Sequence, typename Value>
-Value my_sum(const Sequence& seq, Value value) {
-    for (const auto& x : seq) {
-        value += x;
+template <typename T>
+class Less_than {
+    const T val;
+
+   public:
+    Less_than(const T& v) : val{v} {}
+    bool operator()(const T& x) const {
+        return x < val;
     }
-    return value;
-}
+};
 
 int main() {
-    vector<int> a{1, 2, 3, 4, 5};
-    cout << my_sum(a, 0) << endl;
-    vector<string> b{"foo"s, "bar"s, "hello"s};
-    cout << my_sum(b, ""s) << endl;
+    Less_than lti{100};
+    cout << lti(150) << endl;
+    Less_than lts{"b"s};
+    cout << lts("abc"s) << endl;
+    cout << lts("c"s) << endl;
+
     return 0;
 }
