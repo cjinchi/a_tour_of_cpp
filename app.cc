@@ -12,40 +12,18 @@
 
 using namespace std;
 
-template <typename T>
-class Vector {
-   private:
-    T* eles = new T[10];
-    int _size = 0;
-
-   public:
-    int size() const {
-        return _size;
+template <typename Sequence, typename Value>
+Value my_sum(const Sequence& seq, Value value) {
+    for (const auto& x : seq) {
+        value += x;
     }
-
-    T* begin() {
-        return _size ? &eles[0] : nullptr;
-    }
-
-    T* end() {
-        return _size ? &eles[0] + _size : nullptr;
-    }
-
-    void push_back(const T& val) {
-        eles[_size++] = val;
-    }
-};
+    return value;
+}
 
 int main() {
-    Vector<string> vecs;
-    vecs.push_back("hello"s);
-    vecs.push_back("world"s);
-    for (auto itr = vecs.begin(); itr != vecs.end(); itr++) {
-        cout << *itr << endl;
-    }
-    for (auto& v : vecs) {
-        cout << v << endl;
-    }
-
+    vector<int> a{1, 2, 3, 4, 5};
+    cout << my_sum(a, 0) << endl;
+    vector<string> b{"foo"s, "bar"s, "hello"s};
+    cout << my_sum(b, ""s) << endl;
     return 0;
 }
